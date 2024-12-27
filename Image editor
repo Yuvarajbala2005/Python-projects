@@ -1,0 +1,88 @@
+import os
+from PIL import Image, ImageFilter
+
+
+
+
+folder_dir = "./new"
+
+os.makedirs(folder_dir, exist_ok=True)
+
+for filename in os.listdir(folder_dir):
+    
+    file_path = os.path.join(folder_dir, filename)
+    
+    if file_path.lower().endswith(('.png', '.jpg', '.jpeg', '.bmp', '.gif')):
+
+
+    
+        image = Image.open(file_path)
+        
+        print("enter the type of editing you want: \nBLUR \nCROP \nRESIZE \nB&W \nSMOOTH \nROTATE  ")
+        edit=["BLUR","CROP","RESIZE","B&W","SMOOTH","ROTATE"]
+
+        types=input("enter the type of editing you want:")
+
+        if types=="BLUR":
+            blur_image = image.filter(ImageFilter.GaussianBlur(5))
+        
+      
+            blur_image.save(os.path.join(folder_dir, filename))
+
+
+
+        elif types=="CROP":
+            
+
+
+
+
+            width, height = image.size
+
+            
+            left = int(input("Enter the left of image:"))
+            top = int (input("Enter the top of the image:"))
+            right = int(input("Enter the right of the image:"))
+           
+            bottom =int(input("Enter the bottom of the image:"))
+            if right <= left or bottom <= top:
+                raise ValueError("Invalid coordinates: 'right' must be greater than 'left' and 'bottom' must be greater than 'top'.")
+
+            else:
+
+                image1 = image.crop((left,top,right,bottom))
+
+                image1.save(os.path.join(folder_dir, filename))
+
+
+        elif types=="RESIZE":
+
+            size=int(input("Enter the size of the image:"))
+            resample=int(input("Enter the resample of the image:"))
+            resize_im=(size,resample)
+
+            resize_image=image.resize(resize_im)
+            resize_image.save(os.path.join(folder_dir, filename))
+
+        elif types =="B&W":
+
+            black_and_white=image.convert('L')
+            black_and_white.save(os.path.join(folder_dir, filename))
+
+
+        elif types=="SMOOTH":
+            smooth_img = image.filter(ImageFilter.SMOOTH)
+        
+      
+            smooth_img.save(os.path.join(folder_dir, filename))
+
+        elif types=="ROTATE":
+            dimension=int(input("Enter the degree to rotate:"))
+            rotate_img=image.rotate(dimension)
+            rotate_img.save(os.path.join(folder_dir, filename))
+
+        else:
+            print("Enter the valid tool")
+
+
+
