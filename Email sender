@@ -1,0 +1,14 @@
+import smtplib
+from email.message import EmailMessage
+email=EmailMessage()
+email['from']='sender id'
+email['to']='receiver '
+email['subject']='hello'
+email.set_content('hellow every one ')
+
+with smtplib.SMTP(host='smtp.gmail.com',port=587) as smtp:
+    smtp.ehlo()
+    smtp.starttls()
+    smtp.login('email id','password')
+    smtp.send_message(email)
+    print('finish')
